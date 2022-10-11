@@ -25,7 +25,7 @@ navigationLinks.forEach((link) => {
 
 const ausn = document.querySelector('.ausn');
 const formAusn = ausn.querySelector('.calc__form');
-const resulTax = ausn.querySelector('.result__tax');
+const resulTaxAusn = ausn.querySelector('.result__tax');
 const calcBtnReset = ausn.querySelector('.calc__btn-reset');
 const calcLabelExpenses = ausn.querySelector('.calc__label_expenses');
 
@@ -38,12 +38,12 @@ formAusn.addEventListener('input', () => {
   if (formAusn.type.value === 'income') {
     calcLabelExpenses.style.display = 'none';
 
-    resulTax.textContent = incom * 0.08;
+    resulTaxAusn.textContent = incom * 0.08;
   }
   if (formAusn.type.value === 'expenses') {
     calcLabelExpenses.style.display = 'flex';
 
-    resulTax.textContent = (incom - expenses) * 0.2;
+    resulTaxAusn.textContent = (incom - expenses) * 0.2;
   }
 });
 
@@ -51,4 +51,24 @@ calcBtnReset.addEventListener('click', () => {
   formAusn.income.value = '';
   formAusn.expenses.value = '';
   resulTax.textContent = '0';
+});
+
+// Самозанятый
+
+const selfEmployment = document.querySelector('.self-employment');
+const formSelf = selfEmployment.querySelector('.calc__form');
+const resulTaxSelf = selfEmployment.querySelector('.result__tax');
+const calcBtnResetSelf = selfEmployment.querySelector('.calc__btn-reset');
+
+formSelf.addEventListener('input', () => {
+  let incomU = +formSelf.incomU.value;
+  let incomF = +formSelf.incomF.value;
+
+  resulTaxSelf.textContent = incomU * 0.04 + incomF * 0.06;
+});
+
+calcBtnResetSelf.addEventListener('click', () => {
+  formSelf.incomU.value = '';
+  formSelf.incomF.value = '';
+  resulTaxSelf.textContent = '0';
 });
