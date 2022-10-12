@@ -257,12 +257,23 @@
               <form class="calc__form">
                 <div class="calc__radio-wrapper">
                   <label class="calc__label calc__label_radio">
-                    <input class="calc__radio" type="radio" name="type" />
+                    <input
+                      class="calc__radio"
+                      type="radio"
+                      name="type"
+                      value="IP"
+                      checked
+                    />
                     <span class="calc__text">ИП</span>
                   </label>
 
                   <label class="calc__label calc__label_radio">
-                    <input class="calc__radio" type="radio" name="type" />
+                    <input
+                      class="calc__radio"
+                      type="radio"
+                      name="type"
+                      value="OOO"
+                    />
                     <span class="calc__text">ООО</span>
                   </label>
                 </div>
@@ -297,17 +308,17 @@
                 <p class="result__tax">0</p>
               </div>
 
-              <div class="result__block">
+              <div class="result__block result__block_ip">
                 <p class="result__caption">НДФЛ(Вычет в виде расходов)</p>
                 <p class="result__tax">0</p>
               </div>
 
-              <div class="result__block">
+              <div class="result__block result__block_ip">
                 <p class="result__caption">НДФЛ(Вычет 20% от доходов)</p>
                 <p class="result__tax">0</p>
               </div>
 
-              <div class="result__block">
+              <div class="result__block result__block_ooo">
                 <p class="result__caption">Налог на прибыль 20%</p>
                 <p class="result__tax">0</p>
               </div>

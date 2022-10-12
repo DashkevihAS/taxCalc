@@ -127,3 +127,25 @@ calcBtnResetSelfEmployment.addEventListener('click', () => {
   resultTaxRestCompensation.textContent = '0';
   resultTaxResult.textContent = '0';
 });
+
+// ОСН/ОСНО
+
+const osno = document.querySelector('.osno');
+const formOsno = osno.querySelector('.calc__form');
+
+const resultBlockIp = osno.querySelectorAll('.result__block_ip');
+const resultBlockOoo = osno.querySelector('.result__block_ooo');
+
+resultBlockOoo.style.display = 'none';
+
+formOsno.addEventListener('input', () => {
+  if (formOsno.type.value === 'IP') {
+    resultBlockOoo.style.display = 'none';
+    resultBlockIp.forEach((block) => (block.style.display = ''));
+  }
+
+  if (formOsno.type.value === 'OOO') {
+    resultBlockIp.forEach((block) => (block.style.display = 'none'));
+    resultBlockOoo.style.display = '';
+  }
+});
