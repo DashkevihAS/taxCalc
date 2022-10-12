@@ -67,18 +67,63 @@ const formSelfEmployment = selfEmployment.querySelector('.calc__form');
 const resulTaxSelfEmployment = selfEmployment.querySelector('.result__tax');
 const calcBtnResetSelfEmployment =
   selfEmployment.querySelector('.calc__btn-reset');
+const calcCompensation = selfEmployment.querySelector(
+  '.calc__label_compensation',
+);
+const resultBlocksCompensation = selfEmployment.querySelectorAll(
+  '.result__block_compensation',
+);
+
+const resultTaxCompensation = selfEmployment.querySelector(
+  '.result__tax_compensation',
+);
+const resultTaxRestCompensation = selfEmployment.querySelector(
+  '.result__tax_rest-compensation',
+);
+const resultTaxResult = selfEmployment.querySelector('.result__tax_result');
+
+const checkCompensation = () => {
+  const setDisplay = formSelfEmployment.addCompensation.checked ? '' : 'none';
+  calcCompensation.style.display = setDisplay;
+
+  resultBlocksCompensation.forEach(
+    (block) => (block.style.display = setDisplay),
+  );
+};
+
+checkCompensation();
 
 formSelfEmployment.addEventListener('input', () => {
-  const incomEntity = +formSelfEmployment.entity.value;
-  const incomIndividual = +formSelfEmployment.individual.value;
+  const resEntity = +formSelfEmployment.entity.value * 0.06;
+  const resndividual = +formSelfEmployment.individual.value * 0.04;
 
-  resulTaxSelfEmployment.textContent = formatCurrency(
-    incomEntity * 0.06 + incomIndividual * 0.04,
-  );
+  checkCompensation();
+
+  const tax = resEntity + resndividual;
+
+  formSelfEmployment.compensation.value =
+    formSelfEmployment.compensation.value > 10_000
+      ? 10_000
+      : formSelfEmployment.compensation.value;
+  const benefit = formSelfEmployment.compensation.value;
+  const awaitBenefit =
+    +formSelfEmployment.individual.value * 0.01 +
+    +formSelfEmployment.entity.value * 0.02;
+  const restBenefit = benefit - awaitBenefit > 0 ? benefit - awaitBenefit : 0;
+  const finalTax = tax - (benefit - restBenefit);
+
+  resulTaxSelfEmployment.textContent = formatCurrency(tax);
+  resultTaxCompensation.textContent = formatCurrency(benefit - restBenefit);
+  resultTaxRestCompensation.textContent = formatCurrency(restBenefit);
+  resultTaxResult.textContent = formatCurrency(finalTax);
 });
 
 calcBtnResetSelfEmployment.addEventListener('click', () => {
   formSelfEmployment.entity.value = '';
   formSelfEmployment.individual.value = '';
+  formSelfEmployment.compensation.value = '';
   resulTaxSelfEmployment.textContent = '0';
+  resultTaxCompensation.textContent = '0';
+  resultTaxRestCompensation.textContent = '0';
+  resultTaxResult.textContent = '0';
 });
