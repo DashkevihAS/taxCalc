@@ -1,3 +1,10 @@
+const formatCurrency = (n) =>
+  new Intl.NumberFormat('ru-Ru', {
+    style: 'currency',
+    currency: 'RUB',
+    maximumFractionDigits: 2,
+  }).format(n);
+
 const navigationLinks = document.querySelectorAll('.navigation__link');
 const calcElems = document.querySelectorAll('.calc');
 
@@ -32,43 +39,46 @@ const calcLabelExpenses = ausn.querySelector('.calc__label_expenses');
 calcLabelExpenses.style.display = 'none';
 
 formAusn.addEventListener('input', () => {
-  let incom = +formAusn.income.value;
-  let expenses = +formAusn.expenses.value;
+  const incom = +formAusn.income.value;
+  const expenses = +formAusn.expenses.value;
 
   if (formAusn.type.value === 'income') {
     calcLabelExpenses.style.display = 'none';
 
-    resulTaxAusn.textContent = incom * 0.08;
+    resulTaxAusn.textContent = formatCurrency(incom * 0.08);
   }
   if (formAusn.type.value === 'expenses') {
     calcLabelExpenses.style.display = 'flex';
 
-    resulTaxAusn.textContent = (incom - expenses) * 0.2;
+    resulTaxAusn.textContent = formatCurrency((incom - expenses) * 0.2);
   }
 });
 
 calcBtnReset.addEventListener('click', () => {
   formAusn.income.value = '';
   formAusn.expenses.value = '';
-  resulTax.textContent = '0';
+  resulTaxAusn.textContent = '0';
 });
 
-// Самозанятый
+// Самозанятый и ИП НПД
 
 const selfEmployment = document.querySelector('.self-employment');
-const formSelf = selfEmployment.querySelector('.calc__form');
-const resulTaxSelf = selfEmployment.querySelector('.result__tax');
-const calcBtnResetSelf = selfEmployment.querySelector('.calc__btn-reset');
+const formSelfEmployment = selfEmployment.querySelector('.calc__form');
+const resulTaxSelfEmployment = selfEmployment.querySelector('.result__tax');
+const calcBtnResetSelfEmployment =
+  selfEmployment.querySelector('.calc__btn-reset');
 
-formSelf.addEventListener('input', () => {
-  let incomU = +formSelf.incomU.value;
-  let incomF = +formSelf.incomF.value;
+formSelfEmployment.addEventListener('input', () => {
+  const incomEntity = +formSelfEmployment.entity.value;
+  const incomIndividual = +formSelfEmployment.individual.value;
 
-  resulTaxSelf.textContent = incomU * 0.04 + incomF * 0.06;
+  resulTaxSelfEmployment.textContent = formatCurrency(
+    incomEntity * 0.06 + incomIndividual * 0.04,
+  );
 });
 
-calcBtnResetSelf.addEventListener('click', () => {
-  formSelf.incomU.value = '';
-  formSelf.incomF.value = '';
-  resulTaxSelf.textContent = '0';
+calcBtnResetSelfEmployment.addEventListener('click', () => {
+  formSelfEmployment.entity.value = '';
+  formSelfEmployment.individual.value = '';
+  resulTaxSelfEmployment.textContent = '0';
 });
